@@ -1,21 +1,25 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 
-const Button = ({ children, variant = 'primary', className = '', onClick, ...props }) => {
-	const base = 'inline-flex items-center justify-center font-medium focus:outline-none motion-safe';
-	const variants = {
-		primary: 'btn-primary text-sm',
-		secondary: 'btn-secondary text-sm',
-		accent: 'btn-accent text-sm',
-		ghost: 'bg-transparent text-[var(--color-primary)] border border-transparent hover:border-[rgba(0,0,0,0.04)]'
-	};
+const Button = ({ children, variant = 'primary', className = '', ...props }) => {
+  const baseClasses = 'inline-flex items-center justify-center font-semibold rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent transition-colors duration-200';
 
-	const cls = `${base} ${variants[variant] || variants.primary} ${className}`;
+  const variants = {
+    primary: 'bg-accent text-accent-text hover:bg-accent-hover shadow-md',
+    secondary: 'bg-surface text-primary border border-border hover:bg-gray-50 shadow-md',
+    ghost: 'bg-transparent text-primary hover:bg-gray-100',
+  };
 
-	return (
-		<button className={cls} onClick={onClick} {...props}>
-			{children}
-		</button>
-	);
+  return (
+    <motion.button
+      className={`${baseClasses} ${variants[variant]} ${className}`}
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      {...props}
+    >
+      {children}
+    </motion.button>
+  );
 };
 
 export default Button;
